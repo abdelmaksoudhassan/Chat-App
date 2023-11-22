@@ -1,0 +1,26 @@
+{{> start}}
+
+<form id="login-form">
+    <div class="mb-3">
+        <label for="inputEmail" class="form-label">Email address</label>
+        <input type="email" name="email" class="form-control" id="inputEmail">
+    </div>
+
+    <div class="mb-3">
+        <label for="inputPassword" class="form-label">Password</label>
+        <input type="password" value="Ss#12345" name="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock">
+    </div>
+
+    <div id="login-err" class="login-error"></div>
+
+    <div class="mb-3">
+        <a class="link-opacity-100" href="/signup">Create account</a>
+    </div>
+    
+    <div class="mb-3">
+        <button id="submitBtn" type="submit" class="btn btn-success">login</button>
+        <button id="resetBtn" type="reset" class="btn btn-danger">Reset</button>
+    </div>
+</form>
+
+{{> end}}

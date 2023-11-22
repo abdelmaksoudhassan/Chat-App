@@ -1,0 +1,21 @@
+{{> start}}
+
+<div>
+    <span hidden id="userId" userId="{{id}}"></span>
+    <span hidden id="roomId" roomId="{{roomId}}"></span>
+    <span>{{guardCode}}</span> -
+    <span id="roomOwner"></span> -
+    <span id="email">{{email}}</span>
+</div>
+<button type="button" id="leaveBtn" class="btn btn-dark" onclick="leaveRoom()">Leave Room</button>
+<ol id="messages"></ol>
+{{!-- <form class="row">
+    <div class="col-auto">
+        <input type="text" class="form-control" id="messageBox">
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary" id="sendMessageBtn">send message</button>
+    </div>
+</form> --}}
+
+{{> end}}

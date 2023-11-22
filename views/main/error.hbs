@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Error Page</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="/css-files/bootstrap.min.css" />
+        <link rel="stylesheet" href="/css-files/styles.css" />
+        <link rel="icon" type="image/png" href="/css-files/images/bird-logo.png">
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="box">
+                <h1>{{code}}</h1>
+                <p>{{message}}</p>
+                <div>
+                    <span>Please go to </span>
+                    {{#if (isEqual code 401)}}
+                    <a class="link-opacity-100" href="/login">
+                        login page
+                    <a/>
+                    {{else if (isEqual code 403)}}
+                    <a class="link-opacity-100" href="/profile">
+                        profile page
+                    <a/>
+                    {{else}}
+                    <a class="link-opacity-100" href="/">
+                        home page
+                    <a/>
+                    {{/if}}
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
