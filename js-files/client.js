@@ -167,7 +167,7 @@ $('#listBtn').on('click', () => {
     showSideBar()
 })
 function showSideBar(){
-    $('#side-nav').hide()
+    $('#side-nav').show()
 }
 // hide side nav
 $('#opactity').on('click', () => {
