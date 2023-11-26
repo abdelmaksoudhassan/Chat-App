@@ -83,8 +83,8 @@ function validateRoomForm(){
 // helper function
 function pushRoomToList(code){
     $('#myRooms').append(
-        `<li class="list-group-item room">
-            <div id="code" code=${code}>
+        `<li id="code" code=${code} class="list-group-item room">
+            <div>
                 <span>${code} </span>
             </div>
             <div class="rooms-btns">
