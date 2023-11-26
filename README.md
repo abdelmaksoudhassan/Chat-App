@@ -1,5 +1,5 @@
 # Chat APP
-real time chat app developed using express, mongoDB and Handlebars
+Fullstack real time chat app developed using express, mongoDB and Handlebars
 
 # used packages
 1-bcryptjs: to secure password,
@@ -11,6 +11,7 @@ real time chat app developed using express, mongoDB and Handlebars
 7-mongoose: to access database,
 8-socket.io: to make real time application,
 9-validator: to validate form imput fields,
+10-Jquery: to access frontend tags
 
 # Features
 1- Authentication: signup, login and auth guards
