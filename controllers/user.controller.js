@@ -2,13 +2,14 @@ const User = require('../database/models/user.model')
 const { comparePassword, generateToken } = require('../js-files/server.helper')
 const io = require('../js-files/socket.server')
 
-const signup = (req,res) =>{
+const signup = (req,res,next) =>{
     const {email,password} = req.body
     User.create({email,password})
         .then(()=>{
             res.status(201).send({
                 message: 'Registration successful'
             })
+            next()
         })
         .catch((err)=>{
             if (err.code === 11000){
@@ -20,7 +21,7 @@ const signup = (req,res) =>{
         })
 }
 
-const login = async (req,res) =>{
+const login = async (req,res,next) =>{
     try{
         const {email,password} = req.body
         const user = await User.findOne({email})
@@ -49,12 +50,13 @@ const login = async (req,res) =>{
         // const socket = req.app.get("socket");
         // socket.emit('addToOnlineList', email);
         io.getIO().emit('addToOnlineList', email);
+        next()
     }catch(err){
         res.status(500).send(err)
     }
 }
 
-const logout = async (req,res) =>{
+const logout = async (req,res,next) =>{
     try{
         const {email} = req.user
         // res.clearCookie('token')
@@ -65,6 +67,7 @@ const logout = async (req,res) =>{
         // socket.emit('removeFromOnlineList', email);
         io.getIO().emit('removeFromOnlineList', email)
         res.status(200).send()
+        next()
     }catch(err){
         res.status(500).send({
             message: 'internal error occured'

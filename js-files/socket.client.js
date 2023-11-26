@@ -32,9 +32,56 @@ socket.on('removeFromOnlineList',(email)=>{
         }
     });
 })
+// server welcome message
+socket.on('welcomeMessage',(msg)=>{
+    $("#messages").append(
+        `<li>
+            <div class="alert alert-success" role="alert">
+                <strong>${msg.sender}:</strong>
+                <span>${msg.body}</span>
+            </div>
+        </li>`
+    )
+    autoscroll()
+})
+// server new join message
+socket.on('newUserJoined',(msg)=>{
+    $("#messages").append(
+        `<li>
+            <div class="alert alert-info" role="alert">
+                <strong>${msg.sender}:</strong>
+                <span>${msg.body}</span>
+            </div>
+        </li>`
+    )
+    autoscroll()
+})
 // new message
 socket.on('newMessage', (msg)=>{
-    $("#messages").append(`<li>${msg.sender} - ${msg.body}</li>`)
+    $("#messages").append(
+        `<li>
+            <div class="alert alert-primary" role="alert">
+                <strong>${msg.sender}:</strong>
+                <span>${msg.body}</span>
+                <div class="float-end">
+                    ${moment(new Date(msg.time),"YYYYMMDD").fromNow()}
+                </div>
+            </div>
+        </li>`
+    )
+    autoscroll()
+});
+// left
+socket.on('userleft', (msg)=>{
+    $("#messages").append(
+        `<li>
+            <div class="alert alert-danger" role="alert">
+                <strong>${msg.sender}:</strong>
+                <span>${msg.body}</span>
+            </div>
+        </li>`
+    )
+    autoscroll()
 });
 // user leave
 function leaveRoom(){
@@ -55,15 +102,48 @@ $('#sendMessageBtn').on('click',(e)=>{
 // handle send message error
 socket.on('sendMsgErr',(err)=>{
     console.log(err)
-    alert(err.message || 'intrnal error occured')
+    alert(err || 'intrnal error occured')
 })
 // load room data
 socket.on('loadRoomData',(roomData)=>{
     roomData.messages.forEach(message => {
-        $("#messages").append(`<li>${message.sender.email} - ${message.text}</li>`) 
+        $("#messages").append(
+            `<li>
+                <div class="col alert alert-primary" role="alert">
+                    <strong>${message.sender.email}:</strong>
+                    <span>${message.text}</span>
+                    <div class="row justify-content-end">${moment(message.createdAt).format('LLL')}</div>
+                </div>
+            </li>`
+        )
     });
     $('#roomOwner').text(roomData.admin.email)
 })
+const autoscroll = () => {
+    const $messages = document.querySelector('#messages')
+    
+    // New message element
+    const $newMessage = $messages.lastElementChild
+
+    // Height of the new message
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+
+    // Visible height
+    const visibleHeight = $messages.offsetHeight
+
+    // Height of messages container
+    const containerHeight = $messages.scrollHeight
+
+    // How far have I scrolled?
+    const scrollOffset = $messages.scrollTop + visibleHeight
+
+    if (containerHeight - newMessageHeight <= scrollOffset) {
+        $messages.scrollTop = $messages.scrollHeight
+        window.scrollTo(0, $messages.scrollHeight);
+    }
+}
 // socket disconnected
 socket.on('disconnect',(e)=>{
     console.log('Front: Disconnected from server');

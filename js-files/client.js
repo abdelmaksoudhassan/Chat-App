@@ -21,11 +21,27 @@ $('#login-form').on('submit', async (e) => {
     }).catch(err=>{
         console.log(err)
         if(err.response.status == 500){
-            return $('#login-err').text('internal server error')
+            return $('#login-err').text('unexpected error occured')
         }
         $('#login-err').text(err.response.data.message)
     })
 })
+// clear error alert
+function clrErr(action){
+    if(action == 'signup'){
+        $('#signup-err').text('')
+    }
+    else if(action == 'login'){
+        $('#login-err').text('')
+    }
+    else if(action == 'room'){
+        $('#room-err').text('')
+        $('#code-err').text('')
+    }
+    else{
+        return
+    }
+}
 // configure signup validation
 function validateSignupForm(){
     var email = $('#signup-form #inputEmail').val()
@@ -42,7 +58,6 @@ $('#signup-form #resetBtn').click(function(){
 // send logout request
 $('#logoutBtn').on("click",(e)=>{
     axios.post('/logout').then(res=>{
-        console.log(res)
         if(res.status == 200){
             location.assign('/login')
         }
@@ -67,13 +82,14 @@ function validateRoomForm(){
 }
 // helper function
 function pushRoomToList(code){
-    $('#myRooms')
-    .append(
-        `<li class="room">
-            <span id="code" code=${code}>Room code ${code} </span>
+    $('#myRooms').append(
+        `<li class="list-group-item room">
+            <div id="code" code=${code}>
+                <span>${code} </span>
+            </div>
             <div class="rooms-btns">
-                <button type="button" class="btn btn-enter" onClick="enterRoom(${code})">Enter</button>
-                <button type="button" class="btn btn-danger" onClick="deleteRoom(${code})">Delete</button>
+                <button type="button" class="btn btn-primary btn-sm" onClick="enterRoom(${code})">Enter</button>
+                <button type="button" class="btn btn-danger btn-sm" onClick="deleteRoom(${code})">Delete</button>
             </div>
         </li>`
     )
@@ -84,13 +100,14 @@ window.onload = async function(){
         axios.get('/my-rooms').then(res=>{
             const rooms = res.data
             if(rooms.length > 0){
+                // $('#rooms-sec').show()
                 rooms.forEach(room => {
                     pushRoomToList(room.code)
                 })
             }
         }).catch(err=>{
             console.log(err)
-            alert('internal error occured')
+            alert('unexpected error occured')
         })
     }
 }
@@ -98,7 +115,7 @@ window.onload = async function(){
 function deleteRoom(code){
     axios.delete(`/delete-room/${code}`).then(res=>{
         alert(res.data.message)
-        const listItems = document.querySelectorAll('.my-rooms li');
+        const listItems = document.querySelectorAll('#myRooms li');
         Array.from(listItems).forEach(listItem => {
             if ($("#code").attr('code') == code) {
                 listItem.parentNode.removeChild(listItem);
@@ -106,7 +123,7 @@ function deleteRoom(code){
         })
     }).catch(err=>{
         console.log(err)
-        alert('internal error occured')
+        alert('unexpected error occured')
     })
 }
 // enter room
@@ -142,4 +159,15 @@ $('#joinBtn').on('click', async (e) => {
         console.log(err)
         $('#room-err').text(err.response.data.message)
     }
+})
+// show side nav
+$('#listBtn').on('click', () => {
+    $('#side-nav').show(200)
+})
+// hide side nav
+$('#opactity').on('click', () => {
+    $('#side-nav').hide(200)
+})
+$('#hideBtn').on('click', () => {
+    $('#side-nav').hide(200)
 })

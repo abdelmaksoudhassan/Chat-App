@@ -1,7 +1,17 @@
 {{> start}}
 
 <div class="profile">
-    <div class="side">
+    <div id="side-nav" style="display: none;">
+    <div id="opactity" class="opactity"></div>
+    <div class="side position-fixed top-0 start-0">
+        <div class="row">
+            <button type="button" id="logoutBtn" class="col btn btn-danger btn-sm" style="margin: 5px;">
+                Logout
+            </button>
+            <button type="button" id="hideBtn" class="col btn btn-warning btn-sm" style="margin: 5px;">
+                Hide
+            </button>
+        </div>
         <h4>online contacts</h4>
         <ol class="online-list">
             {{#each onlineList}}
@@ -9,29 +19,44 @@
             {{/each}}
         </ol>
     </div>
-    <div style="width: 20%;"></div>
-    <div class="body">
-        <div class="header">
-            <span class="email"> {{email}} </span>
-            <button type="button" id="logoutBtn" class="btn btn-warning">Logout</button>
+</div>
+    <div class="col">
+        <div class="bg-primary text-light" style="padding: 8px 0px">
+            <div class="container">
+                <div class="row justify-content-between align-items-center">
+                <span class="email col col-sm-auto"> {{email}} </span>
+                <button class="btn btn-light text-primary col-auto col-sm-auto w-auto" type="button" id="listBtn">
+                    online list
+                </button>
+            </div>
+            </div>
         </div>
-        <div>
-            <ol id="myRooms" class="my-rooms"></ol>
-            <br/>
-            <div class="room-form">
-                <h4>Room form</h4>
-                You can create room or enter any room with code and password
-                <form id="room-form" oninput="validateRoomForm()" class="room-form">
+        <div class="splitter"></div>
+        <div id="rooms-sec" class="row justify-content-center align-items-center h-100">
+            <div class="col-sm-10">
+                <div class="shadow p-3 mb-5 bg-body-tertiary rounded">
+                    <h6>My rooms:</h6>
+                    <ol id="myRooms" class="list-group list-group-flush"></ol>
+                </div>
+            </div>
+        </div>
+            
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-sm-10">
+                <form id="room-form" oninput="validateRoomForm()" class="shadow p-3 mb-5 bg-body-tertiary rounded">
                     <div class="mb-3">
-                        <input type="text" maxlength="4" placeholder="Room Code" name="code" class="form-control" id="inputCode" >
+                        You can create room or enter any room with code and password
+                    </div>
+                    <div class="mb-3">
+                        <input onfocus="clrErr('room')" type="text" maxlength="4" placeholder="Room Code" name="code" class="form-control" id="inputCode" >
                         <div id="codeHelpBlock" class="form-text">Code must be 4 digits and unique</div>
                         <div id="code-err" class="code-error"></div>
                     </div>
 
                     <div class="mb-3">
-                        <input type="password" placeholder="Password" value="Ss#123456" name="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock" >
+                        <input onfocus="clrErr('room')" type="password" placeholder="Password" name="password" id="inputPassword" class="form-control" aria-describedby="passwordHelpBlock" >
                         <div id="passwordHelpBlock" class="form-text">
-                        Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                            Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
                         </div>
                     </div>
                     <div class="mb-3">
@@ -39,7 +64,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <button id="joinBtn" type="button" class="btn btn-enter">Join Room</button>
+                        <button id="joinBtn" type="button" class="btn btn-primary">Join Room</button>
                         <button id="createBtn" type="button" class="btn btn-danger" disabled>Create Room</button>
                     </div>
                 </form>

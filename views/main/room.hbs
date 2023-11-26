@@ -3,19 +3,42 @@
 <div>
     <span hidden id="userId" userId="{{id}}"></span>
     <span hidden id="roomId" roomId="{{roomId}}"></span>
-    <span>{{guardCode}}</span> -
-    <span id="roomOwner"></span> -
-    <span id="email">{{email}}</span>
+    <span hidden id="email">{{email}}</span>
 </div>
-<button type="button" id="leaveBtn" class="btn btn-dark" onclick="leaveRoom()">Leave Room</button>
-<ol id="messages"></ol>
-{{!-- <form class="row">
-    <div class="col-auto">
-        <input type="text" class="form-control" id="messageBox">
+<div class="col">
+    <div class="bg-primary text-light fixed-top">
+        <div class="container">
+            <div class="row justify-content-between align-items-center" style="padding: 8px; 0px">
+                <div class="col col-sm-auto">
+                    <div>
+                        <strong>Room: </strong><span>{{guardCode}}</span>
+                    </div>
+                    <div>
+                        <strong>Owner: </strong><span id="roomOwner"></span>
+                    </div>
+                </div>
+                <div class="col-auto col-sm-auto w-auto">
+                    <button type="button" id="leaveBtn" class="btn text-primary btn-light" onclick="leaveRoom()">Leave Room</button>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="col-auto">
-        <button type="submit" class="btn btn-primary" id="sendMessageBtn">send message</button>
+    
+    <div class="container">
+        <div style="height: 130px;"></div>
+        <ol id="messages" class="overflow-hidden" style="list-style-type: none;"></ol>
     </div>
-</form> --}}
+    <div style="height: 35px;"></div>
+    <div class="fixed-bottom bg-light">
+        <div class="container">
+            <form style="padding: 5px 0px;">
+                <div class="d-flex justify-content-start">
+                    <input type="text" class="form-control" id="messageBox">
+                    <button type="submit" class="btn btn-primary" id="sendMessageBtn">Send</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 {{> end}}

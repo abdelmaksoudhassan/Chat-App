@@ -1,26 +1,44 @@
 {{>start}}
 
-<div class="home">
-    <h2>Realtime Chatting</br>Application..</h2>
-    <div class="home-body">
-        <div>
-            <div class="intro">Once new user login the app your online list will be updated<br/>
-            You can create private rooms with unique code and strong password and remove it any time<br/>
-            Once user write correct room data, he can be a member of this room<br/>
-            Any time, user can leave room and join to another room<br/>
-            All data is secured and saved in database<br/></div>
-
-            <div>
-                <button class="btn btn-lg btn-secondary home-btn" onclick="location.assign('/signup')">
-                    signup
-                </button>
-                <button class="btn btn-lg btn-info home-btn" onclick="location.assign('/login')">
-                    login
-                </button>
-            </div>
+<div class="container">
+    <div class="splitter"></div>
+    <h2>Realtime Chatting Application..</h2>
+    <div class="splitter"></div>
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    Once new user login the app your online list will be updated
+                </li>
+                <li class="list-group-item">
+                    You can create private rooms with unique code and strong password and remove it any time
+                </li>
+                <li class="list-group-item">
+                    Once user write correct room data, he can be a member of this room
+                </li>
+                <li class="list-group-item">
+                    Any time, user can leave room and join to another room
+                </li>
+                <li class="list-group-item">
+                    All data is secured and saved in database
+                </li>
+            </ul>
         </div>
-        <img src="../../css-files/images/men-talking.jpg" class="float-end" width="250px" height="300px" />
+        <div class="d-none d-sm-block col-sm-4">
+            <img src="../../css-files/images/men-talking.jpg" class="float-end" width="250px" height="300px" />
+        </div>
     </div>
+    <div class="splitter"></div>
+
+    <div>
+        <button class="btn btn-lg btn-dark" onclick="location.assign('/signup')">
+            Signup
+        </button>
+        <button class="btn btn-lg btn-light" onclick="location.assign('/login')">
+            Login
+        </button>
+    </div>
+    <div class="splitter"></div>
 </div>
 
 {{>end}}

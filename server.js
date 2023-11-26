@@ -76,12 +76,6 @@ app.get('/room',roomGuard,(req,res)=>{
     const {id,email,roomId} = req.data
     res.render('room',{id,roomId,guardCode,email})
 })
-app.get('*',(req,res)=>{
-    res.render('error.hbs',{
-        code: 400,
-        message: "invalid URL"
-    })
-})
 
 IO.on('connection',(socket)=>{
     const {id} = socket
@@ -102,14 +96,14 @@ IO.on('connection',(socket)=>{
         const roomData = await messagesHelper.getRoomData(code)
 
         socket.emit('loadRoomData',roomData)
-
-        socket.emit('newMessage', {
-            sender: "Automatic",
+        
+        socket.emit('welcomeMessage', {
+            sender: "Server",
             body: `Welcome to room ${code}`
         });
-
-        socket.broadcast.to(code).emit('newMessage', {
-            sender: "Automatic",
+        
+        socket.broadcast.to(code).emit('newUserJoined', {
+            sender: "Server",
             body: `${email} has joined`
         });
 
@@ -118,8 +112,8 @@ IO.on('connection',(socket)=>{
     })
 
     socket.on('leave',async (param,callback)=>{
-        socket.broadcast.to(param.code).emit('newMessage', {
-            sender: "Automatic",
+        socket.broadcast.to(param.code).emit('userleft', {
+            sender: "Server",
             body: `${param.email} has left`
         });
         callback()
@@ -128,12 +122,15 @@ IO.on('connection',(socket)=>{
     socket.on('sendMessage',(params,callback)=>{
         const{id,roomId,code,email,txt} = params
         messagesHelper.saveMessage(id,roomId,txt).then(res=>{
+            const {createdAt} = res
             IO.to(code).emit('newMessage', {
                 sender: email,
-                body: txt
+                body: txt,
+                time: createdAt
             });
             callback()
         }).catch(err=>{
+            console.log(err)
             socket.emit('sendMsgErr',err)
         })
     })

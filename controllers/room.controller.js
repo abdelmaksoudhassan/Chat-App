@@ -1,7 +1,7 @@
 const Room = require('../database/models/room.model')
 const { comparePassword, generateToken } = require('../js-files/server.helper')
 
-const addRoom = (req,res) =>{
+const addRoom = (req,res,next) =>{
     const {code,password} = req.body
     const admin = req.user.id
     Room.create({code,password,admin})
@@ -9,6 +9,7 @@ const addRoom = (req,res) =>{
             res.status(201).send({
                 message: `Room with code ${code} created`
             })
+            next()
         })
         .catch((err)=>{
             if (err.code === 11000){
@@ -20,7 +21,7 @@ const addRoom = (req,res) =>{
         })
 }
 
-const deleteRoom = async (req,res) =>{
+const deleteRoom = async (req,res,next) =>{
     try{
         const code = req.params.code
         const admin = req.user.id
@@ -28,12 +29,14 @@ const deleteRoom = async (req,res) =>{
         res.status(200).send({
             message: `room with code ${code} deleted`
         })
+        next()
     }catch(err){
+        console.log(err)
         res.status(500).send(err)
     }
 }
 
-const joinRoom = async (req,res) =>{
+const joinRoom = async (req,res,next) =>{
     const {id,email} = req.user
     try{
         const {code,password} = req.body
@@ -53,11 +56,12 @@ const joinRoom = async (req,res) =>{
         const token = await generateToken(payload)
         req.session.roomToken = token
         res.status(200).send();
+        next()
     }catch(err){
         res.status(500).send(err)
     }
 }
-const enterRoom = async (req,res) =>{
+const enterRoom = async (req,res,next) =>{
     const code = req.params.code
     try{
         const {id,email} = req.user
@@ -76,15 +80,17 @@ const enterRoom = async (req,res) =>{
         const token = await generateToken(payload)
         req.session.roomToken = token
         res.status(200).send();
+        next()
     }catch(err){
         res.status(500).send(err)
     }
 }
 
-const myRooms = (req,res) =>{
+const myRooms = (req,res,next) =>{
     const admin = req.user.id
     Room.find({admin}).then(docs=>{
         res.status(200).send(docs)
+        next()
     }).catch(err=>{
         res.status(500).send(err)
     })

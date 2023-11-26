@@ -42,7 +42,7 @@ roomSchema.pre('save',async function(next){
     }
     next()
 })
-roomSchema.pre('deleteOne', { document: false, query: true }, async function() {
+roomSchema.pre('deleteOne', { document: false, query: true }, async function(next) {
     const doc = await this.model.findOne(this.getFilter());
     await Message.deleteMany({ room: doc._id });
     next()
