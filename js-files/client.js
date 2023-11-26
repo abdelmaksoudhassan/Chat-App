@@ -117,7 +117,8 @@ function deleteRoom(code){
         alert(res.data.message)
         const listItems = document.querySelectorAll('#myRooms li');
         Array.from(listItems).forEach(listItem => {
-            if ($("#code").attr('code') == code) {
+            const liCode = listItem.attributes[1].nodeValue
+            if (liCode == code) {
                 listItem.parentNode.removeChild(listItem);
             }
         })
