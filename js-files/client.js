@@ -143,6 +143,8 @@ $('#createBtn').on('click', (e) => {
     axios.post('/add-room',{code,password}).then(res=>{
         alert(res.data.message)
         pushRoomToList(code)
+        $('#inputCode').text("")
+        $('#inputPassword').text("")
     }).catch(err=>{
         console.log(err)
         $('#code-err').text(err.response.data.message)
