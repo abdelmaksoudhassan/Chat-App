@@ -142,8 +142,6 @@ $('#createBtn').on('click', (e) => {
     const password = $('#inputPassword').val()
     axios.post('/add-room',{code,password}).then(res=>{
         alert(res.data.message)
-        $('#inputCode').text('')
-        $('#inputPassword').text('')
         pushRoomToList(code)
         $('#inputCode').val("")
         $('#inputPassword').val("")
@@ -168,10 +166,16 @@ $('#joinBtn').on('click', async (e) => {
 $('#listBtn').on('click', () => {
     showSideBar()
 })
+function showSideBar(){
+    $('#side-nav').hide()
+}
 // hide side nav
 $('#opactity').on('click', () => {
     hideSideBar()
 })
 $('#hideBtn').on('click', () => {
-    $('#side-nav').hide(200)
+    hideSideBar()
 })
+function hideSideBar(){
+    $('#side-nav').hide()
+}
