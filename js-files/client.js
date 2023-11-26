@@ -143,6 +143,8 @@ $('#createBtn').on('click', (e) => {
     axios.post('/add-room',{code,password}).then(res=>{
         alert(res.data.message)
         pushRoomToList(code)
+        $('#inputCode').val("")
+        $('#inputPassword').val("")
     }).catch(err=>{
         console.log(err)
         $('#code-err').text(err.response.data.message)
@@ -162,12 +164,18 @@ $('#joinBtn').on('click', async (e) => {
 })
 // show side nav
 $('#listBtn').on('click', () => {
-    $('#side-nav').show(200)
+    showSideBar()
 })
 // hide side nav
 $('#opactity').on('click', () => {
-    $('#side-nav').hide(200)
+    hideSideBar()
 })
 $('#hideBtn').on('click', () => {
-    $('#side-nav').hide(200)
+    hideSideBar()
 })
+function showSideBar(){
+    $('#side-nav').show()
+}
+function hideSideBar(){
+    $('#side-nav').hide()
+}
