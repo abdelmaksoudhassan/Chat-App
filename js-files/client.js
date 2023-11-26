@@ -46,7 +46,7 @@ function clrErr(action){
 function validateSignupForm(){
     var email = $('#signup-form #inputEmail').val()
     var password = $('#signup-form #inputPassword').val()
-    const passRegExp = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
+    const passRegExp = /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,20})$/
     if(validator.matches(password,passRegExp) && validator.isEmail(email)){
         return $('#signup-form #submitBtn').prop('disabled', false)
     }
@@ -70,7 +70,7 @@ $('#logoutBtn').on("click",(e)=>{
 function validateRoomForm(){
     var code = $('#room-form #inputCode').val()
     var password = $('#room-form #inputPassword').val()
-    const passRegExp = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,20}$/
+    const passRegExp = /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{8,20})$/
     if(
         validator.matches(password,passRegExp) &&
         validator.isNumeric(code) &&
