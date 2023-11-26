@@ -63,7 +63,7 @@ socket.on('newMessage', (msg)=>{
             <div class="alert alert-primary" role="alert">
                 <strong>${msg.sender}:</strong>
                 <span>${msg.body}</span>
-                <div class="float-end">
+                <div class="row justify-content-end">
                     ${moment(new Date(msg.time),"YYYYMMDD").fromNow()}
                 </div>
             </div>
